@@ -15,7 +15,8 @@ def start_command(chat, message, args):
     This command sends first usage instructions.
     """
     chat.send(
-        "Welcome to CreditQuaestor! \nTo start using me please connect with DropBox using the /connectdropbox command!")
+        "Welcome to CreditQuaestor! \nTo start using me please connect with DropBox using the /connectdropbox command!"
+    )
 
 
 @bot.command("spam")
@@ -50,12 +51,12 @@ def notify_callback(query, data, chat, message):
 
 @bot.command("connectdropbox")
 def connectdropbox_command(chat, message):
-    redirect_uri = "http://127.0.0.1:5000/authcode"
+    redirect_uri = "http://127.0.0.1:5000/parameterexample"
     authorization_url = f"https://www.dropbox.com/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri={redirect_uri}&response_type=code"
     btns = botogram.Buttons()
     btns[0].url("Connect to DropBox", authorization_url)
     chat.send("Please connect me with DropBox!", attach=btns)
- 
+
 
 if __name__ == "__main__":
     bot.run()
