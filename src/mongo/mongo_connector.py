@@ -1,4 +1,6 @@
 import os
+import logging
+import traceback
 import pymongo
 from dotenv import load_dotenv
 
@@ -22,15 +24,19 @@ class MongoConnector:
         if self.client is not None:
             self.client.close()
         if isinstance(exc_value, Exception):
-            print(f"An exception occurred in your with block: {exc_type}")
-            print(f"Exception message: {exc_value}")
-            return True
+            logging.error(
+                "An exception occurred in your with block: %s \nException message: %s\n",
+                exc_type,
+                exc_value,
+            )
+            traceback.print_tb(exc_tb)
+            return False
 
 
-with MongoConnector() as client:
-    db = client["CreditQuaestor"]
-    collection = db["users"]
-    data = collection.find({})
+# with MongoConnector() as client:
+#     db = client["CreditQuaestor"]
+#     collection = db["users"]
+#     data = collection.find({})
 
-    for document in data:
-        print(document)
+#     for document in data:
+#         print(document)
