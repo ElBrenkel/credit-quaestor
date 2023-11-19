@@ -1,4 +1,3 @@
-import json
 from src.mongo.mongo_connector import MongoConnector
 
 

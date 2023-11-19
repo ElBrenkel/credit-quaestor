@@ -7,12 +7,14 @@ from src.data_objects.routine import Routine, RoutineSchema
 class Transaction:
     def __init__(
         self,
+        user_id: int,
         description: str,
         amount: float,
         transaction_type: TransactionType,
         transaction_date=datetime.utcnow(),
         routine: Routine | None = None,
     ):
+        self.user_id = user_id
         self.description = description
         self.amount = amount
         self.transaction_date = transaction_date
@@ -21,6 +23,7 @@ class Transaction:
 
     def to_json(self):
         return {
+            "user_id": self.user_id,
             "amount": self.amount,
             "description": self.description,
             "transaction_type": self.transaction_type.name,
@@ -30,6 +33,7 @@ class Transaction:
 
 
 class TransactionSchema(Schema):
+    user_id = fields.Int()
     description = fields.Str()
     amount = fields.Number()
     transaction_date = fields.Str(required=False)
