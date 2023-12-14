@@ -10,7 +10,7 @@ from telegram.ext import (
 from src.data_objects.user import User
 from src.mongo.mongo_processor import MongoProcessor
 from src.mongo.mongo_connector import MongoConnector
-from src.telegram_bot_service.add_transaction import IS_ROUTINE, conv_handler
+from src.telegram_bot_service.add_transaction import add_transaction_handler
 
 load_dotenv()
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
@@ -20,8 +20,6 @@ logging.basicConfig(
 )
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
-
-IS_ROUTINE, TRANSACTION_TYPE, AMOUNT, DATE, DESCRIPTION = range(4)
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -49,5 +47,6 @@ if __name__ == "__main__":
     start_handler = CommandHandler("start", start)
 
     application.add_handler(start_handler)
+    application.add_handler(add_transaction_handler)
 
     application.run_polling()

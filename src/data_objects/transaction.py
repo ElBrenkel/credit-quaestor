@@ -11,7 +11,7 @@ class Transaction:
         description: str,
         amount: float,
         transaction_type: TransactionType,
-        transaction_date=datetime.utcnow(),
+        transaction_date=datetime.today().strftime("%Y-%m-%d"),
         routine: Routine | None = None,
     ):
         self.user_id = user_id
@@ -27,7 +27,7 @@ class Transaction:
             "amount": self.amount,
             "description": self.description,
             "transaction_type": self.transaction_type.name,
-            "transaction_date": datetime.strftime(self.transaction_date, "%Y-%m-%d"),
+            "transaction_date": self.transaction_date,
             "routine": None if not self.routine else self.routine.to_json(),
         }
 
@@ -42,7 +42,7 @@ class TransactionSchema(Schema):
 
     @post_load
     def make_transaction(self, transaction, **kwargs):
-        if transaction["transaction_date"]:
+        if "transaction_date" in transaction:
             transaction["transaction_date"] = datetime.strptime(
                 transaction["transaction_date"], "%Y-%m-%d"
             )
