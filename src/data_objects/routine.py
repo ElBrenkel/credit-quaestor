@@ -7,9 +7,9 @@ class Routine:
     def __init__(
         self,
         time_frame: RecurrenceType,
-        start_date: datetime,
         end_date: datetime,
         default_amount: float,
+        start_date=datetime.today().strftime("%Y-%m-%d"),
     ):
         self.time_frame = time_frame
         self.start_date = start_date
